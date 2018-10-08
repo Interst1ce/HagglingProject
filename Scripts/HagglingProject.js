@@ -43,10 +43,6 @@ var offerRange;
 
 var currentLoop = 0;
 
-var gameWin = "";
-var gameLose = "";
-var gameTooLong = "";
-
 function initialize(){
 	playerCash = 500;
   eon.FindNode("playerMoney").GetFieldByName("Text").value = ("$" + playerCash.toString() + "$");
@@ -58,9 +54,9 @@ function mainLoop(merchant, disposition){
   eon.FindNode("playerMoney").GetFieldByName("Text").value = ("$" + playerCash.toString() + "$");
   if(currentLoop == 0){
     if(playerCash < (merchant.initialOffer + 100)){
-      eon.FindNode("offerSlider").GetFieldByName("Range").value[1] = playerCash;
+      eon.FindNode("offerSlider").GetFieldByName("Range").value = [50, playerCash];
     }else{
-      eon.FindNode("offerSlider").GetFieldByName("Range").value[1] = (merchant.initialOffer + 100);
+      eon.FindNode("offerSlider").GetFieldByName("Range").value = [50, (merchant.initialOffer + 100)];
     }
     offerRange = merchant.currentOffer - 10;
     eon.FindNode("offerSlider").GetFieldByName("CurrentValue").value = merchant.initialOffer;
