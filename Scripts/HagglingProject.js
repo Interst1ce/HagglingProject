@@ -24,8 +24,14 @@ var hardPool = ["I see that you too see multi-dimensional discounts. Lets us min
                 "Your mind is so open it’s closed, on two different dimensional wavelengths we are. However, you too see the discounts that underlie the dimensions of our universe.",
                 "Your mind is so open its closed, on two different dimensional wavelengths we are. However, your offer is very one-dimensional.",
                 "Your primitive mind cannot comprehend discounts in this dimension or any other. "];
-var itemPool = ["You’ve purchased the human’s dagger! Good Hagglin’!", "You’ve purchased the Mintoaur’s axe! Good Hagglin’!", "You’ve purchased the Alien’s ray gun! Good Hagglin’!"];
-var endPool = [];
+var itemPool = ["You’ve purchased the human’s dagger! Good Hagglin’!",
+                "You’ve purchased the Mintoaur’s axe! Good Hagglin’!",
+                "You’ve purchased the Alien’s ray gun! Good Hagglin’!"];
+var endPool = ["You’ve purchased all possible items and still have money left over! YOU WIN! You are now a haggling master. Way to go.",
+                "Well that wasn’t very good haggling at all. TRY AGAIN!",
+                "No friend of mine would take up this much time. I do not think we will be making a deal today.",
+                "YOU’VE WASTED MY TIME LONG ENOUGH HUMAN. I THINK ITS TIME FOR ME TO USE THIS AXE ON YOU.",
+                "Time is not linear, which is why I’m amazed you’ve taken this long to come up with any sort of deal. Don’t think we’ll be melding our minds to come to a deal in this timeline."];
 
 var easyMerchant = {disposition: 0, initialOffer: 100, currentOffer: 100, responses: easyPool, loop: 7, intro: "Hello my friend. Today is a great day for you indeed, here I have a great item that has come from a far away land. Come and let us converse in a civil manner to discuss a possible agreement we may come to regarding the price of this item."};
 var mediumMerchant = {disposition: 1, initialOffer: 200, currentOffer: 200, responses: mediumPool, loop: 5, intro: "HUMAN, I AM ONGAR THE DESTROYER. I HAVE CRUSHED COUNTLESS OF YOUR KIND UNDER THE WEIGHT OF MY AXE. YOUR FRAIL FIGURE CLEARLY INDICATES YOU ARE WEAK NOT ONLY IN COMBAT, BUT IN YOUR PATHETIC SKILLS OF PERSUASION. COME, DO BUSINESS WITH ME IF YOU DARE."};
@@ -202,12 +208,12 @@ function gameEnd(end){
     eon.FindNode("gameEndText").GetFieldByName("Text").value = gameEndText[1];
   }else if(end == 1){
     if(playerInventory[0] == 1 && playerInventory[1] == 1 && playerInventory[2] == 1){
-      eon.FindNode("gameEndText").GetFieldByName("Text").value = gameEndText[2];
+      eon.FindNode("gameEndText").GetFieldByName("Text").value = gameEndText[0];
     }else{
       eon.FindNode("gameEndText").GetFieldByName("Text").value = gameEndText[1];
     }
   }else if(end == 2){
-    eon.FindNode("gameEndText").GetFieldByName("Text").value = gameEndText[0];
+    eon.FindNode("gameEndText").GetFieldByName("Text").value = gameEndText[currentMerchant.disposition + 2];
   }
 }
 
