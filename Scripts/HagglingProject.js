@@ -24,6 +24,8 @@ var hardPool = ["I see that you too see multi-dimensional discounts. Lets us min
                 "Your mind is so open it’s closed, on two different dimensional wavelengths we are. However, you too see the discounts that underlie the dimensions of our universe.",
                 "Your mind is so open its closed, on two different dimensional wavelengths we are. However, your offer is very one-dimensional.",
                 "Your primitive mind cannot comprehend discounts in this dimension or any other. "];
+var itemPool = ["You’ve purchased the human’s dagger! Good Hagglin’!", "You’ve purchased the Mintoaur’s axe! Good Hagglin’!", "You’ve purchased the Alien’s ray gun! Good Hagglin’!"];
+var endPool = [];
 
 var easyMerchant = {disposition: 0, initialOffer: 100, currentOffer: 100, responses: easyPool, loop: 7, intro: "Hello my friend. Today is a great day for you indeed, here I have a great item that has come from a far away land. Come and let us converse in a civil manner to discuss a possible agreement we may come to regarding the price of this item."};
 var mediumMerchant = {disposition: 1, initialOffer: 200, currentOffer: 200, responses: mediumPool, loop: 5, intro: "HUMAN, I AM ONGAR THE DESTROYER. I HAVE CRUSHED COUNTLESS OF YOUR KIND UNDER THE WEIGHT OF MY AXE. YOUR FRAIL FIGURE CLEARLY INDICATES YOU ARE WEAK NOT ONLY IN COMBAT, BUT IN YOUR PATHETIC SKILLS OF PERSUASION. COME, DO BUSINESS WITH ME IF YOU DARE."};
@@ -49,7 +51,6 @@ function initialize(){
 function mainLoop(merchant, disposition){
   eon.FindNode("playerMoney").GetFieldByName("Text").value = ("$" + playerCash.toString() + "$");
   if(currentLoop == 0){
-    eon.Trace(playerCash);
     if(playerCash < (merchant.initialOffer + 100)){
       eon.FindNode("offerSlider").GetFieldByName("Range").value[1] = playerCash;
     }else{
@@ -197,16 +198,16 @@ function makeOffer(playerChoice, merchant){
    }
 }
 function gameEnd(end){
-  if(end = 0){
-    eon.FindNode("gameEndText").GetFieldByName("Text").value == gameLose;
-  }else if(end = 1){
+  if(end == 0){
+    eon.FindNode("gameEndText").GetFieldByName("Text").value = gameEndText[1];
+  }else if(end == 1){
     if(playerInventory[0] == 1 && playerInventory[1] == 1 && playerInventory[2] == 1){
-      eon.FindNode("gameEndText").GetFieldByName("Text").value == gameWin;
+      eon.FindNode("gameEndText").GetFieldByName("Text").value = gameEndText[2];
     }else{
-      eon.FindNode("gameEndText").GetFieldByName("Text").value == gameLose;
+      eon.FindNode("gameEndText").GetFieldByName("Text").value = gameEndText[1];
     }
-  }else if(end = 2){
-    eon.FindNode("gameEndText").GetFieldByName("Text").value == gameTooLong;
+  }else if(end == 2){
+    eon.FindNode("gameEndText").GetFieldByName("Text").value = gameEndText[0];
   }
 }
 
@@ -230,22 +231,24 @@ function On_clickConfirm(){
       playerInventory[0] = 1;
       if(playerCash < 0){
         gameEnd(0);
-      }else{
+      }else if(playerOffer >= offerRange){
         eon.FindNode("minotaurPlace").GetFieldByName("SetRun").value = true;
         currentMerchant = mediumMerchant;
-        mainLoop(mediumMerchant);
         currentLoop = 0;
+        playerOffer = 0;
+        mainLoop(mediumMerchant);
       }
     break;
     case 1:
       playerInventory[1] = 1;
       if(playerCash < 0){
         gameEnd(0);
-      }else{
+      }else if(playerOffer >= offerRange){
         eon.FindNode("alienPlace").GetFieldByName("SetRun").value = true;
         currentMerchant = hardMerchant;
-        mainLoop(hardMerchant);
         currentLoop = 0;
+        playerOffer = 0;
+        mainLoop(hardMerchant);
       }
     break;
     default:
